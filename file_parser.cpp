@@ -16,11 +16,10 @@ map_t file_parser::read(const std::string &file_name){
     unsigned line_number ={0};
     std::string line;
     while ( std::getline(indata, line) ) { 
-        std::istringstream iss(line);
-        char ch;
-        while (iss >>ch){
+        for(auto i:line){
+
             ret.push_back(std::vector<tile_t>{});
-            switch (ch)
+            switch (i)
             {
                 case 'H':
                     ret[line_number].push_back(tile_t::harry);
@@ -39,11 +38,11 @@ map_t file_parser::read(const std::string &file_name){
                     ret[line_number].push_back(tile_t::space);
                     break;
                 default:
-                    std::cerr << "Error file contained invalid char :"<<ch<<std::endl;
+                    std::cerr << "Error file contained invalid char :"<<i<<std::endl;
                     exit(1);
             }
-            line_number++;
         }
+        line_number++;
     }
     indata.close();
     return ret;

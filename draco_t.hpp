@@ -3,6 +3,7 @@
 #include "common.hpp"
 #include <vector>
 #include <iostream>
+#include "ncurses.h"
 
 class draco_t{
     public:
@@ -24,20 +25,6 @@ class draco_t{
     };
     private:
 
-    coords find(const map_t& map,tile_t type){
-        unsigned x{};
-        unsigned y={};
-        for (auto& line :map){
-            for(auto i:line){
-                if (i==type)
-                    return coords{x,y};
-                x++;
-            }
-            y++;
-        }
-        std::cerr<<"Draco not in map!"<<std::endl;
-        return coords{unsigned(-1),unsigned(-1)};
-    }
 
     void calculate_path(const  map_t& map){
         //The first for initializes the 2d array
