@@ -17,7 +17,6 @@ map_t file_parser::read(const std::string &file_name){
     std::string line;
     while ( std::getline(indata, line) ) { 
         for(auto i:line){
-
             ret.push_back(std::vector<tile_t>{});
             switch (i)
             {

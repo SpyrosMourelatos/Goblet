@@ -1,296 +1,163 @@
 Location of
-100
+d
 5
 2
 Location of
-71
+G
 4
 2
-Location of
-104
-3
-2
-2
-5
-5
-5
-5
-5
-5
-5
-5
-5
-5
-5
-2
-2
-2
-2
-4
-4
-4
-4
-4
-4
-4
-3
-3
-3
-3
-3
-3
-5
-5
-5
-5
-5
-5
-5
-2
-2
-4
-4
-3
-4
-4
-4
-4
-4
+last point
 4
 2
+last point
 4
-3
-3
-4
-3
-WIN
-Location of
-100
-5
-2
-Location of
-71
-4
-2
-Location of
-104
-3
-2
-2
-15
-Location of
-100
-5
-2
-Location of
-71
-4
-2
-Location of
-104
-3
-2
-Location of
-100
-5
-2
-Location of
-71
-4
-2
-Location of
-104
-3
-2
-2
-3
-2
-3
-2
-3
-2
-2
-2
-5
-5
-3
-3
-4
-4
-2
-2
-2
-2
-2
-2
-3
-3
-3
-3
-3
-3
-3
-3
-3
-3
-3
-3
-3
-3
-2
-2
-2
-2
-2
-2
-2
-2
-2
-2
-2
-Location of
-100
-5
-2
-Location of
-71
-4
-2
-Location of
-104
-3
-2
-2
-Location of
-100
-5
-2
-Location of
-71
-4
-2
-Location of
-104
 1
+last point
+4
+0
+last point
+4
+4294967295
+Location of
+d
+5
+2
+Location of
+G
+4
+2
+last point
+4
+2
+last point
+4
 1
-2
-5
-2
-2
-2
+last point
 4
+0
+last point
 4
-3
-3
-3
-3
-3
-5
-5
-5
-5
-5
-5
-2
-2
-2
-2
-2
-2
-4
-4
-4
-3
-3
-3
-3
-3
-WIN
+4294967295
 Location of
-100
+d
 5
 2
 Location of
-71
+G
 4
 2
-Location of
-104
+last point
+4
+2
+last point
+4
 1
+last point
+4
+0
+last point
+4
+4294967295
+Location of
+d
+5
+2
+Location of
+G
+4
+2
+last point
+4
+2
+last point
+4
 1
-5
-5
-5
-5
-5
-5
-5
-2
-2
-2
-2
-2
-2
-2
+last point
 4
+0
+last point
 4
-4
-4
-4
-4
-4
-3
-3
-3
-3
-3
-5
-5
-2
-5
-5
-3
-3
-5
-3
-3
-4
-4
-4
-4
-2
-2
-2
-2
-2
-2
-2
+4294967295
 Location of
-100
+d
 5
 2
 Location of
-71
+G
 4
 2
-Location of
-104
+last point
 4
-6
-3
+2
+last point
+4
+1
+last point
+4
+0
+last point
+4
+4294967295
 Location of
-100
+d
 5
 2
 Location of
-71
+G
 4
 2
-Location of
-104
+last point
 4
-6
+2
+last point
+4
+1
+last point
+4
+0
+last point
+4
+4294967295
+Location of
+d
 5
+2
+Location of
+G
+4
+2
+last point
+4
+2
+last point
+4
+1
+last point
+4
+0
+last point
+4
+4294967295
+Location of
+d
+5
+2
+Location of
+G
+4
+2
+last point
+4
+2
+last point
+4
+1
+last point
+4
+0
+last point
+4
+4294967295
 Location of
 d
 5
@@ -303,6 +170,61 @@ Location of
 h
 4
 6
+3
+3
+2
+2
+2
+4
+4
+4
+4
+2
+2
+5
+5
+5
+5
+3
+3
+3
+4
+4
+2
+2
+2
+4
+2
+2
+4
+3
+3
+3
+4
+4
+4
+4
+5
+5
+5
+5
+5
+5
+5
+2
+2
+3
+3
+3
+3
+3
+3
+4
+4
+4
+4
+2
+WIN
 Location of
 d
 5
@@ -315,31 +237,7 @@ Location of
 h
 4
 6
-5
-5
-5
-5
-5
-5
-4
-4
-4
-4
-4
-4
-4
-5
-5
-5
-5
-5
-5
-5
-2
-2
-2
-2
-2
+3
 2
 2
 2
@@ -349,19 +247,12 @@ h
 4
 4
 4
+2
 4
 4
+2
 3
-3
-3
-3
-3
-3
-3
-3
-3
-3
-3
+2
 3
 5
 5
@@ -369,14 +260,79 @@ h
 5
 5
 5
+5
+5
+5
+5
+4
+4
+3
+3
+5
+5
+2
+2
+5
+5
+3
+5
+5
+5
+5
+5
+5
+3
+3
+3
+3
+3
+4
+4
+4
+4
+4
+2
+4
 2
 2
 2
-2
-2
-2
-2
+5
+5
+5
 2
 2
 2
 4
+Location of
+d
+5
+2
+Location of
+G
+4
+2
+Location of
+h
+4
+6
+3
+2
+2
+3
+3
+3
+2
+2
+Location of
+d
+5
+2
+Location of
+G
+4
+2
+Location of
+h
+4
+6
+2

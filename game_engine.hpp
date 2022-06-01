@@ -29,11 +29,19 @@ class game_engine{
                         return;
                     }
                     //current_harry_location 
-                    if (draco.next_move() == harry.get_current_location())
-                        draco.pause_to_avoid_harry();
-                    if(maybe_change_goblet()){
-                        draco.update_path(current_goblet_location) ;
-                    }
+//                    if (auto next_draco_location = draco.next_move();
+//                            next_draco_location== harry.get_current_location())
+//                    {
+//                        prev_draco_location=next_draco_location;
+//                        draco.pause_to_avoid_harry();
+//                    }
+//                    else{
+//                        map_[prev_draco_location[0]][prev_draco_location[1]]=tile_t::space;
+//                        map_[next_draco_location[0]][next_draco_location[1]]=tile_t::draco;
+//                    }
+//                    if(maybe_change_goblet()){
+//                        draco.update_path(current_goblet_location) ;
+//                    }
                     display();
                 }
             }
@@ -63,5 +71,6 @@ class game_engine{
         draco_t draco;
         harry_t harry;
         coords current_goblet_location;
+        coords prev_draco_location;
 
 };
