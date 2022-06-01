@@ -14,7 +14,7 @@ class harry_t {
         auto y=current_harry_location[1];
         debug((int)c);
         switch(c){
-        case 4://UP
+        case 3://UP
           if (auto f=map[x][y-1]; f== tile_t::space){
                 current_harry_location = {x,y-1};
                 map[x][y] = tile_t::space;
@@ -27,7 +27,7 @@ class harry_t {
             return action_t::reached_goblet;
           }
           break;
-        case 5://DOWN
+        case 2://DOWN
           if (auto f=map[x][y+1]; f== tile_t::space){
                 current_harry_location = {x,y+1};
                 map[x][y] = tile_t::space;
@@ -40,7 +40,7 @@ class harry_t {
             return action_t::reached_goblet;
           }
           break;
-        case 3: //left
+        case 4: //left
           if (auto f=map[x-1][y]; f== tile_t::space){
                 current_harry_location = {x-1,y};
                 map[x][y] = tile_t::space;
@@ -53,7 +53,7 @@ class harry_t {
             return action_t::reached_goblet;
           }
           break;
-        case 2://right
+        case 5://right
           if (auto f=map[x+1][y]; f== tile_t::space){
                 map[x][y] = tile_t::space;
                 map[x+1][y] = tile_t::harry;

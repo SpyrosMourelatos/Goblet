@@ -9,6 +9,7 @@ int main(int argc ,char** argv){
         std::cerr<<"Not correct ammount of arguments"<<argc <<std::endl;
         exit(1);
     }
+
     file_parser parser{};
     keypad(initscr(),true);// activate the keypad 
     curs_set(false);//don't show cursor

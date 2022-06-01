@@ -2,17 +2,19 @@
 
 #include "common.hpp"
 #include <bits/stdc++.h>
+#include <climits>
 #include <vector>
 #include <list>
 #include <iostream>
 #include "ncurses.h"
+#include <limits>
 
 class draco_t{
     public:
     draco_t(const map_t& map){
         draco_position =  find(map,tile_t::draco);
         goblet_position =  find(map,tile_t::goblet);
-        //calculate_path(map);
+        calculate_path(map);
     };
     void update_path(coords goblet_new_coords){
         //TODO
@@ -37,7 +39,7 @@ class draco_t{
                 if( i==tile_t::wall)
                     temp_secret_line.push_back(-1);
                 else 
-                    temp_secret_line.push_back(INT_MAX);
+                    temp_secret_line.push_back(std::numeric_limits<int>::max());
             }
             secret_map.push_back(temp_secret_line);
         }
@@ -49,15 +51,16 @@ class draco_t{
         
     };
     void backtrack(coords last_point){
-        path.push_back(last_point);
         auto x= last_point[0];
         auto y= last_point[1];
         debug("last point");
         debug(x);
         debug(y);
+        debug(secret_map[x][y]);
         auto distance =secret_map[x][y];
         if (distance == 0)
             return;
+        path.push_back(last_point);
         if(test_backtrack(x-1,y,distance))
             backtrack(coords{x-1,y});
         else if(test_backtrack(x+1,y,distance))
@@ -80,22 +83,22 @@ class draco_t{
         auto test_path = visited.front();
         auto x  = test_path[0];
         auto y  = test_path[1];
+        auto distance = secret_map[x][y];
         visited.pop_front();
-        if(test_coord(x+1,y)) return ;
-        if(test_coord(x-1,y)) return ;
-        if(test_coord(x,y+1)) return ;
-        if(test_coord(x,y-1)) return ;
+        if(test_coord(x+1,y,distance)) return ;
+        if(test_coord(x-1,y,distance)) return ;
+        if(test_coord(x,y+1,distance)) return ;
+        if(test_coord(x,y-1,distance)) return ;
         colorize();
     }
-    bool test_coord(unsigned x,unsigned y){
-        auto distance = secret_map[x][y];
+    bool test_coord(unsigned x,unsigned y,int distance){
         if( secret_map[x][y] == -2)
         {
+            secret_map[x][y]=distance+1;
             visited.push_back(coords{x,y});
-            secret_map[x][y] = distance + 1;
             return true;
         }
-        else if(secret_map[x][y] == INT_MAX)
+        else if(secret_map[x][y] == std::numeric_limits<int>::max())
         {
             visited.push_back(coords{x,y});
             secret_map[x][y] = distance + 1;

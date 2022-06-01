@@ -16,8 +16,8 @@ map_t file_parser::read(const std::string &file_name){
     unsigned line_number ={0};
     std::string line;
     while ( std::getline(indata, line) ) { 
+        ret.push_back(std::vector<tile_t>{});
         for(auto i:line){
-            ret.push_back(std::vector<tile_t>{});
             switch (i)
             {
                 case 'H':
@@ -44,5 +44,14 @@ map_t file_parser::read(const std::string &file_name){
         line_number++;
     }
     indata.close();
-    return ret;
+
+    map_t actual_ret(ret[0].size(),std::vector<tile_t>(ret.size(),tile_t::space));
+    for(unsigned j=0;j<ret.size(); j++){
+        for(unsigned i=0;i<ret[j].size();i++){
+            actual_ret[i][j]=ret[j][i];
+                
+        }
+    }
+    
+    return actual_ret;
 }

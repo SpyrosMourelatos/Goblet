@@ -16,7 +16,10 @@ class game_engine{
             :draco{map},
             harry{map},
             map_{map}
-        {}
+        {
+            prev_draco_location = find(map,tile_t::draco);
+            current_goblet_location=find(map,tile_t::goblet);
+        }
         void loop(){
             display();
             while(true){
@@ -29,19 +32,23 @@ class game_engine{
                         return;
                     }
                     //current_harry_location 
-//                    if (auto next_draco_location = draco.next_move();
-//                            next_draco_location== harry.get_current_location())
-//                    {
-//                        prev_draco_location=next_draco_location;
-//                        draco.pause_to_avoid_harry();
-//                    }
-//                    else{
-//                        map_[prev_draco_location[0]][prev_draco_location[1]]=tile_t::space;
-//                        map_[next_draco_location[0]][next_draco_location[1]]=tile_t::draco;
-//                    }
-//                    if(maybe_change_goblet()){
-//                        draco.update_path(current_goblet_location) ;
-//                    }
+                    if (auto next_draco_location = draco.next_move();
+                            next_draco_location== harry.get_current_location())
+                    {
+                        prev_draco_location=next_draco_location;
+                        draco.pause_to_avoid_harry();
+                    }
+                    else{
+                        map_[prev_draco_location[0]][prev_draco_location[1]]=tile_t::space;
+                        map_[next_draco_location[0]][next_draco_location[1]]=tile_t::draco;
+                        prev_draco_location=next_draco_location;
+                    }
+                    if(prev_draco_location == current_goblet_location)
+                        lose();
+
+                    if(maybe_change_goblet()){
+                        draco.update_path(current_goblet_location) ;
+                    }
                     display();
                 }
             }
@@ -50,7 +57,14 @@ class game_engine{
     private:
         void win(){
             //TODO
-            debug("WIN");
+            debug("WIN\n");
+            exit(1);
+        }
+
+        void lose(){
+            //TODO
+            debug("LOSE\n");
+            exit(1);
         }
         bool maybe_change_goblet(){
             //TODO 
@@ -61,7 +75,7 @@ class game_engine{
             for (auto& line: map_){
                 unsigned j=0;
                 for(auto symbol:line){
-                    mvaddch(i,j,static_cast<char>(symbol));
+                    mvaddch(j,i,static_cast<char>(symbol));
                     j++;
                 }
                 i++;

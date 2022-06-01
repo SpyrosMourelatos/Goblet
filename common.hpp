@@ -34,13 +34,13 @@ static inline void debug(T s){
     std::ofstream f;
     f.open("outputs.txt", std::ios_base::app);
     f<<s;
-    f<<"\n";
+    //f<<"\n";
 }
 
 static inline coords find(const map_t& map,tile_t type){
-    unsigned y={};
+    unsigned x{};
     for (auto& line :map){
-        unsigned x{};
+        unsigned y={};
         for(auto i:line){
             if (i==type){
                 debug("Location of");
@@ -49,9 +49,9 @@ static inline coords find(const map_t& map,tile_t type){
                 debug(y);
                 return coords{x,y};
             }
-            x++;
+            y++;
         }
-        y++;
+        x++;
     }
     std::cerr<<"Draco not in map!"<<std::endl;
     return coords{unsigned(-1),unsigned(-1)};
