@@ -1,57 +1,58 @@
 #include "common.hpp"
 #include "file_parser.hpp"
-#include <cstdlib>
+
 #include <iostream>
-#include <sstream>
+#include <sstream> //string stream
 
 
 map_t file_parser::read(const std::string &file_name){
-    std::ifstream indata; 
-    indata.open(file_name); 
-    if(!indata) { 
-        std::cerr << "Error: file could not be opened"<< file_name <<std::endl;
+    std::ifstream file; 
+    file.open(file_name); //file.open("text.txt")
+    if(!file) { 
+        std::cerr << "Error: file could not be opened "<< file_name <<std::endl;
         exit(1);
     }
-    map_t ret{};
+    map_t intermidiate_map{};
     unsigned line_number ={0};
-    std::string line;
-    while ( std::getline(indata, line) ) { 
-        ret.push_back(std::vector<tile_t>{});
-        for(auto i:line){
-            switch (i)
+    std::string line{};
+    while ( std::getline(file, line) ) { 
+        //initialize the line because intermidiate_map[line_number] would be undefined
+        intermidiate_map.push_back(std::vector<tile_t>{});
+        for(auto character:line){
+            switch (character)
             {
-                case 'H':
-                    ret[line_number].push_back(tile_t::harry);
+//                case 'H':
+//                    intermidiate_map[line_number].push_back(tile_t::harry);
+//                    break;
+//                case 'D':
+//                    intermidiate_map[line_number].push_back(tile_t::draco);
+//                    break;
+//                case 'G':
+//                    intermidiate_map[line_number].push_back(tile_t::goblet);
+//                    break;
+                case '*':
+                    intermidiate_map[line_number].push_back(tile_t::wall);
                     break;
-                case 'D':
-                    ret[line_number].push_back(tile_t::draco);
-                    break;
-                case 'G':
-                    ret[line_number].push_back(tile_t::goblet);
-                    break;
-                case '|':
-                case '-':
-                    ret[line_number].push_back(tile_t::wall);
-                    break;
-                case ' ':
-                    ret[line_number].push_back(tile_t::space);
+                case '.':
+                    intermidiate_map[line_number].push_back(tile_t::space);
                     break;
                 default:
-                    std::cerr << "Error file contained invalid char :"<<i<<std::endl;
+                    std::cerr << "Error cha contained invalid char :"<<character<<std::endl;
                     exit(1);
             }
         }
         line_number++;
     }
-    indata.close();
+    file.close();
+    return reverse_indexes(intermidiate_map);
+}
 
-    map_t actual_ret(ret[0].size(),std::vector<tile_t>(ret.size(),tile_t::space));
-    for(unsigned j=0;j<ret.size(); j++){
-        for(unsigned i=0;i<ret[j].size();i++){
-            actual_ret[i][j]=ret[j][i];
-                
+map_t file_parser::reverse_indexes(const map_t& intermidiate_map){
+    map_t actual_map(intermidiate_map[0].size(),std::vector<tile_t>(intermidiate_map.size(),tile_t::space));
+    for(unsigned j=0;j<intermidiate_map.size(); j++){
+        for(unsigned i=0;i<intermidiate_map[j].size();i++){
+            actual_map[i][j]=intermidiate_map[j][i];
         }
     }
-    
-    return actual_ret;
+    return actual_map;
 }

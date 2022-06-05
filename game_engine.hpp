@@ -3,27 +3,58 @@
 #include "common.hpp"
 #include "draco_t.hpp" 
 #include "harry_t.hpp"
+#include "goblet_controller.hpp"
 
 #include <curses.h>
+#include <ctime>//for true random seed
+#include <stdlib.h>//for rand
 
-//#define KEY_UP 72
-//#define KEY_DOWN 80
-//#define KEY_LEFT 75
-//#define KEY_RIGHT 77
 class game_engine{
     public:
         game_engine(map_t & map)
-            :draco{map},
+            :map_{map},
+            draco{map},
             harry{map},
-            map_{map}
+            goblet_accessible{map}
+
         {
-            prev_draco_location = find(map,tile_t::draco);
-            current_goblet_location=find(map,tile_t::goblet);
+            srand(unsigned(time(0)));
+
+            init_pair(green,COLOR_GREEN,COLOR_GREEN);
+            init_pair(yellow,COLOR_YELLOW,COLOR_WHITE);
+            init_pair(black,COLOR_BLACK,COLOR_WHITE);
+
+            goblet_location = goblet_accessible.get_location();
+            auto draco_location = goblet_accessible.add_entity_on_map(tile_t::draco);
+            auto harry_location = goblet_accessible.add_entity_on_map(tile_t::harry);
+            harry.set_location(harry_location);
+            harry.set_goblet(goblet_location);
+            draco.set_location(draco_location);
+            draco.set_goblet(goblet_location);
+            draco.calculate_path();
+            map_[goblet_location[0]][goblet_location[1]]=tile_t::goblet;
+            map_[harry_location[0]][harry_location[1]]=tile_t::harry;
+            map_[draco_location[0]][draco_location[1]]=tile_t::draco;
+
         }
+        coords add_entity_on_map(tile_t t){
+            auto cols= map_.size();
+            auto rows= map_[0].size();
+            unsigned x=rand()%cols;
+            unsigned y=rand()%rows;
+            while( map_[x][y] != tile_t::space)
+            {
+                x=rand()%cols;
+                y=rand()%rows;
+            }
+            return coords{x,y};
+        }
+
         void loop(){
             display();
             while(true){
-                if (auto act=harry.move(map_); act!= action_t::invalid){
+                auto act=harry.move();
+                if (act!= action_t::invalid){
                     if (act == action_t::exit)
                         return;
                     else if(act == action_t::reached_goblet)
@@ -31,23 +62,20 @@ class game_engine{
                         win();
                         return;
                     }
-                    //current_harry_location 
-                    if (auto next_draco_location = draco.next_move();
-                            next_draco_location== harry.get_current_location())
+                    auto draco_action=draco.move();
+                    if(draco_action == action_t::reached_goblet)
                     {
-                        prev_draco_location=next_draco_location;
-                        draco.pause_to_avoid_harry();
-                    }
-                    else{
-                        map_[prev_draco_location[0]][prev_draco_location[1]]=tile_t::space;
-                        map_[next_draco_location[0]][next_draco_location[1]]=tile_t::draco;
-                        prev_draco_location=next_draco_location;
-                    }
-                    if(prev_draco_location == current_goblet_location)
                         lose();
+                        return;
+                    }
 
                     if(maybe_change_goblet()){
-                        draco.update_path(current_goblet_location) ;
+                        map_[goblet_location[0]][goblet_location[1]]=tile_t::space;
+                        goblet_location= goblet_accessible.add_entity_on_map(tile_t::goblet);
+                        map_[goblet_location[0]][goblet_location[1]]=tile_t::goblet;
+                        harry.set_goblet(goblet_location);
+                        draco.set_goblet(goblet_location);
+                        draco.calculate_path();
                     }
                     display();
                 }
@@ -55,36 +83,74 @@ class game_engine{
 
         }
     private:
+        enum colors:unsigned{
+            green = 1,
+            black = 2,
+            yellow = 3,
+            grey =4
+        };
         void win(){
-            //TODO
             debug("WIN\n");
-            exit(1);
         }
 
         void lose(){
-            //TODO
             debug("LOSE\n");
-            exit(1);
         }
         bool maybe_change_goblet(){
-            //TODO 
-            return false;
+            static int x=1;
+            x++;
+            return !bool(x%5);
         };
         void display(){
             unsigned i=0;
             for (auto& line: map_){
                 unsigned j=0;
                 for(auto symbol:line){
-                    mvaddch(j,i,static_cast<char>(symbol));
+                    enum_to_char(j,i,symbol);
                     j++;
                 }
                 i++;
             }
         };
-        map_t map_;
+        void enum_to_char(unsigned j,unsigned i,tile_t t){
+            attron(A_NORMAL);
+            switch (t)
+            {
+                case tile_t::harry :
+                    attron(COLOR_PAIR(black));
+                    mvaddch(j,i,'h');
+                    attroff(COLOR_PAIR(black));
+                    break;
+                case tile_t::wall :
+                    attron(COLOR_PAIR(black));
+                    mvaddch(j,i,'*');
+                    attroff(COLOR_PAIR(black));
+                    break;
+                case tile_t::draco:
+                    attron(COLOR_PAIR(black));
+                    mvaddch(j,i,'d');
+                    attroff(COLOR_PAIR(black));
+                    break;
+                case tile_t::goblet:
+                    attron(COLOR_PAIR(yellow));
+                    mvaddch(j,i,'G');
+                    attroff(COLOR_PAIR(yellow));
+                    break;
+                case tile_t::space :
+                    attron(COLOR_PAIR(green));
+                    mvaddch(j,i,' ');
+                    attroff(COLOR_PAIR(green));
+                    break;
+                default:
+                    attron(COLOR_PAIR(green));
+                    mvaddch(j,i,' ');
+                    attroff(COLOR_PAIR(green));
+            }
+        }
+        map_t& map_;
         draco_t draco;
         harry_t harry;
-        coords current_goblet_location;
-        coords prev_draco_location;
+        coords goblet_location;
+        goblet_controller goblet_accessible;
 
 };

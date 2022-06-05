@@ -2,11 +2,10 @@
 
 #include "common.hpp"
 #include <fstream>
-#include <vector>
 
-class file_parser{
-    public:
+struct file_parser{
     map_t read(const std::string& f);
     private:
-    map_t  map{};
+    //this functiontransforms x-> y and y->x because is needed by ncurses...
+    map_t reverse_indexes(const map_t & map);
 };
