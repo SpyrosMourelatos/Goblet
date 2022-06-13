@@ -35,7 +35,6 @@ void game_engine::loop(){
     }
 }
 void game_engine::enum_to_char(unsigned j,unsigned i,tile_t t){
-    //   attron(A_NORMAL); 
     switch (t)
     {
         case tile_t::harry :

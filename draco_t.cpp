@@ -7,9 +7,10 @@ draco_t::draco_t(map_t& map)
 action_t draco_t::move(){
     auto next_coords = path.back();
     auto ret = move_from_to(location, next_coords);
-    if (ret != action_t::invalid)
+    if (ret != action_t::invalid){
         path.pop_back();
-    location =  next_coords;
+        location =  next_coords;
+    }
     return ret;
 }
 
