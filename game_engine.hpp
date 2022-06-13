@@ -13,18 +13,14 @@ class game_engine{
         int loop();
 
     private:
-        void win();
-        void lose();
         bool maybe_change_goblet();
         void display();
         void enum_to_char(unsigned j,unsigned i,tile_t t);
 
-        enum colors:unsigned{
-            green = 1,
-            black = 2,
-            yellow = 3,
-            grey =4
-        };
+        const unsigned green = 1;
+        const unsigned black = 2;
+        const unsigned yellow = 3;
+        const unsigned grey =4;
         map_t& map_;
         draco_t draco;
         harry_t harry;

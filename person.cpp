@@ -13,15 +13,12 @@ person::person(map_t& m,tile_t t)
     : map{m},self_symbol{t}
 {}
 
-void person::update_goblet(coords xy){
-    goblet_location = xy;
-}
-void person::update_self(coords xy){
-    location=xy;
-}
-
 int person::calculate_goblet_distance(){
-    //The first for initializes the 2d array
+    // Return might be a distance or INTMAX
+    // if it is intmax we have to redo the calculation               
+    // on a new location if it is distance,we can use it elswhere
+
+    // The first "for" initializes the 2d array
     initial_distances_map={};
     visited={};
     for (auto& line :map){
@@ -35,7 +32,8 @@ int person::calculate_goblet_distance(){
         initial_distances_map.push_back(temp_secret_line);
     }
     initial_distances_map[goblet_location[0]][goblet_location[1]] = -2 ;   //initialize goblet
-    initial_distances_map[location[0]][location[1]] = 0;
+    initial_distances_map[location[0]][location[1]] = 0;  //zero this is the distance of person
+                                                          //from himself
     visited.push_back(location);
     find_distances();
     return initial_distances_map[goblet_location[0]][goblet_location[1]];
@@ -43,7 +41,6 @@ int person::calculate_goblet_distance(){
 
 void person::find_distances(){
     if(visited.empty()){
-        debug("There is no way out!");
         return ;
     }
     auto test_path = visited.front();
@@ -58,13 +55,14 @@ void person::find_distances(){
     find_distances();
 }
 bool person::test_coord(unsigned x,unsigned y,int distance){
-    if( initial_distances_map[x][y] == -2)
+    if( initial_distances_map[x][y] == -2) //special value for goblet
     {
         initial_distances_map[x][y]=distance+1;
         visited.push_back(coords{x,y});
         return true;
     }
-    else if(initial_distances_map[x][y] == std::numeric_limits<int>::max())
+    else if(initial_distances_map[x][y] == std::numeric_limits<int>::max()) //special value for not yet
+                                                                            //tested space
     {
         visited.push_back(coords{x,y});
         initial_distances_map[x][y] = distance + 1;

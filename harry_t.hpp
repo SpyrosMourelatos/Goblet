@@ -7,6 +7,6 @@
 class harry_t :public person{
     public:
     harry_t(map_t& map);
-    action_t move() override;
+    action_t move() ;
     coords get_location();
 };

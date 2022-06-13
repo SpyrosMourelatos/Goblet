@@ -10,10 +10,10 @@
 #include <limits>
 #include "person.hpp"
 
-class draco_t:public person{
+class draco_t: public person{
     public:
     draco_t(map_t& map);
-    action_t move() override;
+    action_t move() ;
     void calculate_path();
     int get_goblet_total_distance();
 

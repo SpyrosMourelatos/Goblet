@@ -14,6 +14,9 @@ enum class tile_t {
     space
 };
 
+// the keyword class makes the enumerator scoped
+//  you can not use the words freely eg:"move" 
+//  but you have to use the scoped alternative "action_t::move"
 enum class action_t {
     move,
     reached_goblet,
@@ -24,10 +27,4 @@ enum class action_t {
 using coords= std::array<unsigned,2>;
 using map_t = std::vector<std::vector<tile_t>>;
 
-template <class T>
-static inline void debug(T s){
-    std::ofstream f;
-    f.open("outputs.txt", std::ios_base::app);
-    f<<s;
-}
 

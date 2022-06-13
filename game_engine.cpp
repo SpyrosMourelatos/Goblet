@@ -13,13 +13,13 @@ int game_engine::loop(){
                 return -1;
             else if(act == action_t::reached_goblet)
             {
-                win();
+                //We won;
                 return 1;
             }
             auto draco_action=draco.move();
             if(draco_action == action_t::reached_goblet)
             {
-                lose();
+                //We lost;
                 return 0;
             }
 
@@ -108,34 +108,29 @@ void game_engine::display(){
         i++;
     }
 };
-
 bool game_engine::maybe_change_goblet(){
-    static std::random_device rnd;
-    static std::mt19937 mt{rnd()};
-    static std::uniform_real_distribution<double> generator(0,1);
-    static auto total_probability = 0.1;
-    int max_rounds = draco.get_goblet_total_distance();
-    //Bernuli Binominam Distribution:
-    //Chance of getting even one
-    //total_probability=1-(1/1-q)^max_rounds  =>  1-[1/root(0.5,max_rounds)]=q
-    auto per_turn_threshold = std::pow(total_probability,1.0/max_rounds);
-    double d100 = generator(mt);
-    debug("Per turn threshold: ");
-    debug(per_turn_threshold);
-    debug(d100);
-    debug("\n");
-    if (d100 > per_turn_threshold){
-        total_probability+=0.1;
-        return true;
-    }
-    else return false;
-    
-};
-
-void game_engine::win(){
-    debug("WIN\n");
+    static const int half_rounds = draco.get_goblet_total_distance()/2;
+    static int x=0;
+    x++;
+    return !bool(x%half_rounds);
 }
 
-void game_engine::lose(){
-    debug("LOSE\n");
-}
+//bool game_engine::maybe_change_goblet(){
+//    static std::random_device rnd;//srand(time(0))
+//    static std::mt19937 mt{rnd()};
+//    static std::uniform_real_distribution<double> generator(0,1);
+//    static auto total_reverse_probability = 0.1;
+//    int max_rounds = draco.get_goblet_total_distance();
+//    //Bernuli Binominam Distribution:
+//    //Chance of getting even one
+//    //total_probability=1-(1/1-q)^max_rounds  =>  1-[1/root(0.5,max_rounds)]=q
+//    auto per_turn_threshold = std::pow(total_reverse_probability,1.0/max_rounds);
+//    double dice100 = generator(mt);
+//    if (dice100 > per_turn_threshold){
+//        total_reverse_probability+=0.1;
+//        return true;
+//    }
+//    else return false;
+//    
+//};
+
