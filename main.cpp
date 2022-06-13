@@ -13,9 +13,15 @@ int main(int argc ,char** argv){
     file_parser parser{};
     auto map = parser.read(argv[1]); //read the file
     keypad(initscr(),true);// activate the keypad 
-    start_color();
+    start_color();  //activate colors
     curs_set(false);//don't show cursor
     game_engine game{map}; //initialize game
-    game.loop();           //run the loop
-    endwin();
+    int game_result = game.loop();           //run the loop
+    endwin();              //close curses elegantly
+    if (game_result==-1)
+        std::cout<<"Exited"<<std::endl;
+    else if(game_result==0)
+        std::cout<<"Lost :("<<std::endl;
+    else if(game_result==1)
+        std::cout<<"WON!!"<<std::endl;
 }

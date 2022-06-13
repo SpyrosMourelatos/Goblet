@@ -10,7 +10,7 @@
 class game_engine{
     public:
         game_engine(map_t & map);
-        void loop();
+        int loop();
 
     private:
         void win();

@@ -3,23 +3,23 @@
 #include <cmath>
 #include <random>
 
-void game_engine::loop(){
+int game_engine::loop(){
     display();
     while(true){
         auto act=harry.move();
         if (act!= action_t::invalid){
             if (act == action_t::exit)
-                return;
+                return -1;
             else if(act == action_t::reached_goblet)
             {
                 win();
-                return;
+                return 1;
             }
             auto draco_action=draco.move();
             if(draco_action == action_t::reached_goblet)
             {
                 lose();
-                return;
+                return 0;
             }
 
             if(maybe_change_goblet()){

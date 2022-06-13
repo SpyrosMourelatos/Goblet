@@ -21,15 +21,6 @@ map_t file_parser::read(const std::string &file_name){
         for(auto character:line){
             switch (character)
             {
-//                case 'H':
-//                    intermidiate_map[line_number].push_back(tile_t::harry);
-//                    break;
-//                case 'D':
-//                    intermidiate_map[line_number].push_back(tile_t::draco);
-//                    break;
-//                case 'G':
-//                    intermidiate_map[line_number].push_back(tile_t::goblet);
-//                    break;
                 case '*':
                     intermidiate_map[line_number].push_back(tile_t::wall);
                     break;
